@@ -14,7 +14,7 @@ This version connects the existing Sanstha Seva website to **Supabase Auth + Pos
 
 ## Updating an existing GitHub Pages repository
 
-To replace the old demo website with this version, upload/replace the contents of this project into the repository root (keep `.github/workflows/` and `web/`), then commit the changes. The deployment workflow publishes `web/`. The secure login screen appears after the Supabase URL and publishable key are configured. After signing in, **Log out** is available in the top-right header and in the sidebar.
+To replace the old demo website with this version, upload/replace the contents of this project into the repository root (keep `.github/workflows/` and `web/`), then commit the changes. The deployment workflow publishes `web/`. The secure login screen appears after the Supabase URL and publishable key are configured. After signing in, one **Log out** control is available in the top-right header. The login gate is a full-screen layer, so it cannot sit beside or overlap the dashboard. The service-worker cache version is bumped to help existing installs receive the layout fix.
 
 ## Setup (one-time)
 
