@@ -90,3 +90,33 @@ Useful official references:
 - [Supabase Auth](https://supabase.com/docs/guides/auth)
 - [Secure your data](https://supabase.com/docs/guides/database/secure-data)
 - [Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security)
+
+
+## Username/password login for village members (no email required)
+
+This upgrade changes the website login to a username field. Internally, Supabase Auth uses a reserved synthetic address like `username@members.sanstha.invalid`; members do not need an email inbox. Password recovery by email is therefore unavailable: the administrator must create a replacement account or use a carefully planned reset process.
+
+### Apply the upgrade safely
+
+1. Back up your GitHub repository first.
+2. Upload/replace the `web/` and `android/app/src/main/assets/` files from this package in your repository and commit them. Keep the current `web/supabase-config.js` project URL and publishable key values when copying files; do not overwrite them with the blank sample values in this package.
+3. In Supabase SQL Editor, run `supabase/migrations/202610250002_username_login.sql` after your original database setup.
+4. Deploy the Edge Function at `supabase/functions/create-member-login/index.ts` named `create-member-login`. In Supabase Dashboard use Edge Functions → Deploy new function / editor, or deploy with Supabase CLI. The function uses the project's server-side `SUPABASE_SERVICE_ROLE_KEY` secret; never put this key in website JavaScript or GitHub.
+5. Create the FIRST admin account from Supabase Dashboard → Authentication → Users → Add user. Use an internal email like `admin@members.sanstha.invalid`, set a strong password, and mark email confirmed. This is an internal login alias, not an actual mailbox.
+6. In SQL Editor, promote that user and assign username `admin` (change email if you used another alias):
+
+   ```sql
+   update public.profiles
+   set role = 'admin', username = 'admin', display_name = 'Sanstha Seva Administrator'
+   where id = (select id from auth.users where lower(email) = 'admin@members.sanstha.invalid');
+   ```
+
+   Confirm exactly one row was updated. Then sign in to the website with username `admin` and the password you set in Supabase.
+7. In Admin Panel, create member accounts. Give each member their username and temporary password privately. Ask them not to share passwords.
+
+### Important security notes
+
+- The Edge Function is deliberately admin-only; staff can manage records but cannot create login accounts.
+- The first admin must be created manually in Supabase because no admin exists yet to authorize account creation.
+- Use a different username for every person. Do not use phone numbers or public member IDs as passwords.
+- The Edge Function must be deployed and the SQL migration applied before username login works. This ZIP alone does not change the live GitHub Pages site.

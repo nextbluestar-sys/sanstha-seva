@@ -3,10 +3,10 @@
 <body>
 <section id="authGate" class="auth-gate" aria-live="polite">
   <div class="auth-card"><div class="brand auth-brand"><div class="seal">✺</div><div><b>Sanstha Seva</b><small>Bahujan Samaj Vikas Sansthan</small></div></div>
-    <h1>Secure sign in</h1><p>Sign in to access shared Sanstha Seva records.</p>
-    <form id="authForm"><div class="field"><label>Email address</label><input name="email" type="email" autocomplete="username" required placeholder="you@example.com"></div><div class="field"><label>Password</label><input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"></div><div class="form-actions"><button class="btn" type="submit">Sign in</button><button class="btn secondary" type="button" id="signUpBtn">Create account</button></div></form>
+    <h1>Member sign in</h1><p>Use the username and password given to you by Sanstha Seva.</p>
+    <form id="authForm"><div class="field"><label>Username</label><input name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="32" pattern="[A-Za-z0-9._-]+" placeholder="Enter your username"></div><div class="field"><label>Password</label><input name="password" type="password" autocomplete="current-password" minlength="8" required placeholder="Enter your password"></div><div class="form-actions"><button class="btn" type="submit">Sign in</button></div></form>
     <div id="authStatus" class="notice" role="status">Connect this app to Supabase to enable secure sign-in.</div>
-    <small class="auth-note">Access is controlled by database policies. New accounts start with member permissions; an administrator must grant staff access.</small>
+    <small class="auth-note">No email is needed. For safety, only an administrator can create usernames and reset access.</small>
   </div>
 </section>
 <aside class="sidebar"><div class="brand"><div class="seal">✺</div><div><b>Sanstha Seva</b><small>Bahujan Samaj Vikas Sansthan</small></div></div><nav id="nav"><button class="active" data-page="dashboard">⌂ <span>Dashboard</span></button><button data-page="members">♙ <span>Members & Families</span></button><button data-page="donations">₹ <span>Collect Donation</span></button><button data-page="receipts">▤ <span>Receipts & Reports</span></button><button data-page="news">▣ <span>News & Events</span></button><button data-page="admin">⚙ <span>Admin Panel</span></button></nav><button id="signOutSidebarBtn" class="sidebar-logout" type="button">↪ <span>Log out</span></button><div class="sidebar-note">Educate • Organize • Agitate<br><small>Community • Empowerment • Self-reliance</small></div></aside>
